@@ -4,7 +4,7 @@ Practicing Go (including Testing and Benchmarking) using Algorithms
 
 - Sorting
     - [x] Bubble Sort
-    - [ ] Insertion Sort
+    - [x] Insertion Sort
     - [ ] Selection Sort
     - [ ] Quick Sort
     - [ ] Merge Sort
