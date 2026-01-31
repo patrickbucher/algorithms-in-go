@@ -8,6 +8,24 @@ import (
 
 type Sort[T cmp.Ordered] func([]T)
 
+func TestBubbleSortSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testWith(t, BubbleSort, numbers)
+}
+
+func TestBubbleSortLarge(t *testing.T) {
+	testRandInt(t, BubbleSort, 1000)
+}
+
+func TestInsertionSortSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testWith(t, InsertionSort, numbers)
+}
+
+func TestInsertionSortLarge(t *testing.T) {
+	testRandInt(t, InsertionSort, 1000)
+}
+
 func BenchmarkBubbleSort(b *testing.B) {
 	for b.Loop() {
 		BubbleSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
