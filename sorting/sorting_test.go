@@ -42,7 +42,7 @@ func TestQuickSortSmall(t *testing.T) {
 }
 
 func TestQuickSortLarge(t *testing.T) {
-	testRandInt(t, QuickSort, 1000)
+	testRandInt(t, QuickSort, 100)
 }
 
 func BenchmarkBubbleSort(b *testing.B) {

@@ -1,7 +1,9 @@
 package sorting
 
-import "cmp"
-import "fmt"
+import (
+	"cmp"
+	"fmt"
+)
 
 func BubbleSort[T cmp.Ordered](xs []T) {
 	n := len(xs)
@@ -62,16 +64,22 @@ func quickSort[T cmp.Ordered](xs []T, lower, upper int) {
 	i := lower + 1
 	j := upper
 	for i < j {
-		if cmp.Less(xs[j], xs[i]) && cmp.Less(xs[j], pivot) {
+		for cmp.Compare(xs[i], pivot) <= 0 && i < j {
+			i++
+		}
+		for cmp.Compare(xs[j], pivot) >= 0 && j > i {
+			j--
+		}
+		if i < j {
 			Swap(xs, i, j)
 			p = i
+		} else {
+			p = j
 		}
-		i++
-		j--
 	}
 	Swap(xs, lower, p)
 	fmt.Println("after", xs[lower:upper+1])
-	quickSort(xs, lower, p)
+	quickSort(xs, lower, p-1)
 	quickSort(xs, p+1, upper)
 }
 
