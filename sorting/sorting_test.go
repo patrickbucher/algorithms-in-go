@@ -3,6 +3,7 @@ package sorting
 import (
 	"cmp"
 	"math/rand"
+	"slices"
 	"testing"
 )
 
@@ -26,6 +27,15 @@ func TestInsertionSortLarge(t *testing.T) {
 	testRandInt(t, InsertionSort, 1000)
 }
 
+func TestSelectionSortSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testWith(t, SelectionSort, numbers)
+}
+
+func TestSelectionSortLarge(t *testing.T) {
+	testRandInt(t, SelectionSort, 1000)
+}
+
 func BenchmarkBubbleSort(b *testing.B) {
 	for b.Loop() {
 		BubbleSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
@@ -38,12 +48,20 @@ func BenchmarkInsertionSort(b *testing.B) {
 	}
 }
 
+func BenchmarkSelectionSort(b *testing.B) {
+	for b.Loop() {
+		SelectionSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
+	}
+}
+
 func testWith[T cmp.Ordered](t *testing.T, f Sort[T], xs []T) {
+	n := len(xs)
+	ys := make([]T, n)
+	copy(ys, xs)
+	zs := slices.Sorted(slices.Values(xs))
 	f(xs)
-	for i := 0; i < len(xs)-1; i++ {
-		if xs[i] > xs[i+1] {
-			t.Errorf("sorting: %v at %d > %v at %d\n", xs[i], i, xs[i+1], i)
-		}
+	if !slices.Equal(xs, zs) {
+		t.Errorf("sorting %v: expected %v, got %v\n", ys, zs, xs)
 	}
 }
 

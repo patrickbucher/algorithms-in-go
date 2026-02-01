@@ -32,6 +32,20 @@ func InsertionSort[T cmp.Ordered](numbers []T) {
 	}
 }
 
+func SelectionSort[T cmp.Ordered](numbers []T) {
+	n := len(numbers)
+	for i := 0; i < n; i++ {
+		min, m := numbers[i], i
+		for j := i + 1; j < n; j++ {
+			if cmp.Less(numbers[j], min) {
+				min = numbers[j]
+				m = j
+			}
+		}
+		Swap(numbers, i, m)
+	}
+}
+
 func Swap[T cmp.Ordered](s []T, i, j int) {
 	temp := s[i]
 	s[i] = s[j]
