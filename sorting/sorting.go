@@ -2,47 +2,47 @@ package sorting
 
 import "cmp"
 
-func BubbleSort[T cmp.Ordered](numbers []T) {
-	n := len(numbers)
+func BubbleSort[T cmp.Ordered](xs []T) {
+	n := len(xs)
 	for i := 0; i < n; i++ {
 		for j := 1; j < n; j++ {
 			if i == j {
 				continue
 			}
-			if cmp.Less(numbers[j], numbers[j-1]) {
-				Swap(numbers, j-1, j)
+			if cmp.Less(xs[j], xs[j-1]) {
+				Swap(xs, j-1, j)
 			}
 		}
 	}
 }
 
-func InsertionSort[T cmp.Ordered](numbers []T) {
-	n := len(numbers)
+func InsertionSort[T cmp.Ordered](xs []T) {
+	n := len(xs)
 	for i := 1; i < n; i++ {
-		x := numbers[i]
+		x := xs[i]
 		for j := 0; j < i; j++ {
-			if cmp.Less(x, numbers[j]) {
+			if cmp.Less(x, xs[j]) {
 				for k := i; k > j; k-- {
-					Swap(numbers, k, k-1)
+					Swap(xs, k, k-1)
 				}
-				numbers[j] = x
+				xs[j] = x
 				break
 			}
 		}
 	}
 }
 
-func SelectionSort[T cmp.Ordered](numbers []T) {
-	n := len(numbers)
+func SelectionSort[T cmp.Ordered](xs []T) {
+	n := len(xs)
 	for i := 0; i < n; i++ {
-		min, m := numbers[i], i
+		min, m := xs[i], i
 		for j := i + 1; j < n; j++ {
-			if cmp.Less(numbers[j], min) {
-				min = numbers[j]
+			if cmp.Less(xs[j], min) {
+				min = xs[j]
 				m = j
 			}
 		}
-		Swap(numbers, i, m)
+		Swap(xs, i, m)
 	}
 }
 
