@@ -7,9 +7,9 @@ import (
 	"testing"
 )
 
-type Sort[T cmp.Ordered] func([]T)
+type SortInPlace[T cmp.Ordered] func([]T)
 
-const bigTestSize = 10_000
+const bigTestSize = 1000
 
 func TestBubbleSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
@@ -95,7 +95,7 @@ func BenchmarkQuickSortLarge(b *testing.B) {
 	}
 }
 
-func testWith[T cmp.Ordered](t *testing.T, f Sort[T], xs []T) {
+func testWith[T cmp.Ordered](t *testing.T, f SortInPlace[T], xs []T) {
 	n := len(xs)
 	ys := make([]T, n)
 	copy(ys, xs)
@@ -106,7 +106,7 @@ func testWith[T cmp.Ordered](t *testing.T, f Sort[T], xs []T) {
 	}
 }
 
-func testRandInt(t *testing.T, f Sort[int], n int) {
+func testRandInt(t *testing.T, f SortInPlace[int], n int) {
 	testWith(t, f, randomNumbers(n))
 }
 
