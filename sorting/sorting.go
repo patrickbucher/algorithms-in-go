@@ -64,10 +64,10 @@ func quickSort[T cmp.Ordered](xs []T, lower, upper int) {
 	i := lower + 1
 	j := upper
 	for i < j {
-		for cmp.Compare(xs[i], pivot) <= 0 && i < j {
+		for cmp.Compare(xs[i], pivot) <= 0 && i <= j {
 			i++
 		}
-		for cmp.Compare(xs[j], pivot) >= 0 && j > i {
+		for cmp.Compare(xs[j], pivot) >= 0 && j >= i {
 			j--
 		}
 		if i < j {

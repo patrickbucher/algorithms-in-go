@@ -36,6 +36,11 @@ func TestSelectionSortLarge(t *testing.T) {
 	testRandInt(t, SelectionSort, 1000)
 }
 
+func TestQuickSortDebug(t *testing.T) {
+	numbers := []int{7, 6}
+	testWith(t, QuickSort, numbers)
+}
+
 func TestQuickSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
 	testWith(t, QuickSort, numbers)
