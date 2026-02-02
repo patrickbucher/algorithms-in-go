@@ -9,13 +9,11 @@ import (
 
 type Sort[T cmp.Ordered] func([]T)
 
+const bigTestSize = 10_000
+
 func TestBubbleSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
 	testWith(t, BubbleSort, numbers)
-}
-
-func TestBubbleSortLarge(t *testing.T) {
-	testRandInt(t, BubbleSort, 1000)
 }
 
 func TestInsertionSortSmall(t *testing.T) {
@@ -23,22 +21,9 @@ func TestInsertionSortSmall(t *testing.T) {
 	testWith(t, InsertionSort, numbers)
 }
 
-func TestInsertionSortLarge(t *testing.T) {
-	testRandInt(t, InsertionSort, 1000)
-}
-
 func TestSelectionSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
 	testWith(t, SelectionSort, numbers)
-}
-
-func TestSelectionSortLarge(t *testing.T) {
-	testRandInt(t, SelectionSort, 1000)
-}
-
-func TestQuickSortDebug(t *testing.T) {
-	numbers := []int{7, 6}
-	testWith(t, QuickSort, numbers)
 }
 
 func TestQuickSortSmall(t *testing.T) {
@@ -46,25 +31,67 @@ func TestQuickSortSmall(t *testing.T) {
 	testWith(t, QuickSort, numbers)
 }
 
-func TestQuickSortLarge(t *testing.T) {
-	testRandInt(t, QuickSort, 100)
+func TestBubbleSortLarge(t *testing.T) {
+	testRandInt(t, BubbleSort, bigTestSize)
 }
 
-func BenchmarkBubbleSort(b *testing.B) {
+func TestInsertionSortLarge(t *testing.T) {
+	testRandInt(t, InsertionSort, bigTestSize)
+}
+
+func TestSelectionSortLarge(t *testing.T) {
+	testRandInt(t, SelectionSort, bigTestSize)
+}
+
+func TestQuickSortLarge(t *testing.T) {
+	testRandInt(t, QuickSort, bigTestSize)
+}
+
+func BenchmarkBubbleSortSmall(b *testing.B) {
 	for b.Loop() {
 		BubbleSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
 	}
 }
 
-func BenchmarkInsertionSort(b *testing.B) {
+func BenchmarkInsertionSortSmall(b *testing.B) {
 	for b.Loop() {
 		InsertionSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
 	}
 }
 
-func BenchmarkSelectionSort(b *testing.B) {
+func BenchmarkSelectionSortSmall(b *testing.B) {
 	for b.Loop() {
 		SelectionSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
+	}
+}
+
+func BenchmarkQuickSortSmall(b *testing.B) {
+	for b.Loop() {
+		QuickSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
+	}
+}
+
+func BenchmarkBubbleSortLarge(b *testing.B) {
+	for b.Loop() {
+		BubbleSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkInsertionSortLarge(b *testing.B) {
+	for b.Loop() {
+		InsertionSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkSelectionSortLarge(b *testing.B) {
+	for b.Loop() {
+		SelectionSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkQuickSortLarge(b *testing.B) {
+	for b.Loop() {
+		QuickSort(randomNumbers(bigTestSize))
 	}
 }
 
@@ -80,9 +107,13 @@ func testWith[T cmp.Ordered](t *testing.T, f Sort[T], xs []T) {
 }
 
 func testRandInt(t *testing.T, f Sort[int], n int) {
+	testWith(t, f, randomNumbers(n))
+}
+
+func randomNumbers(n int) []int {
 	numbers := make([]int, n)
 	for i := 0; i < n; i++ {
 		numbers[i] = rand.Intn(n)
 	}
-	testWith(t, f, numbers)
+	return numbers
 }
