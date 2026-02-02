@@ -18,6 +18,13 @@ func BubbleSort[T cmp.Ordered](xs []T) {
 	}
 }
 
+func BubbleSorted[T cmp.Ordered](xs []T) []T {
+	ys := make([]T, len(xs))
+	copy(ys, xs)
+	BubbleSort(ys)
+	return ys
+}
+
 func InsertionSort[T cmp.Ordered](xs []T) {
 	n := len(xs)
 	for i := 1; i < n; i++ {

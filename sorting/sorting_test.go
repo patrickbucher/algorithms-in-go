@@ -8,43 +8,53 @@ import (
 )
 
 type SortInPlace[T cmp.Ordered] func([]T)
+type SortedCopy[T cmp.Ordered] func([]T) []T
 
 const bigTestSize = 1000
 
 func TestBubbleSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
-	testWith(t, BubbleSort, numbers)
+	testSortInPlaceWith(t, BubbleSort, numbers)
 }
 
 func TestInsertionSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
-	testWith(t, InsertionSort, numbers)
+	testSortInPlaceWith(t, InsertionSort, numbers)
 }
 
 func TestSelectionSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
-	testWith(t, SelectionSort, numbers)
+	testSortInPlaceWith(t, SelectionSort, numbers)
 }
 
 func TestQuickSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
-	testWith(t, QuickSort, numbers)
+	testSortInPlaceWith(t, QuickSort, numbers)
+}
+
+func TestBubbleSortedSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortedCopyWith(t, BubbleSorted, numbers)
 }
 
 func TestBubbleSortLarge(t *testing.T) {
-	testRandInt(t, BubbleSort, bigTestSize)
+	testSortInPlaceRand(t, BubbleSort, bigTestSize)
 }
 
 func TestInsertionSortLarge(t *testing.T) {
-	testRandInt(t, InsertionSort, bigTestSize)
+	testSortInPlaceRand(t, InsertionSort, bigTestSize)
 }
 
 func TestSelectionSortLarge(t *testing.T) {
-	testRandInt(t, SelectionSort, bigTestSize)
+	testSortInPlaceRand(t, SelectionSort, bigTestSize)
 }
 
 func TestQuickSortLarge(t *testing.T) {
-	testRandInt(t, QuickSort, bigTestSize)
+	testSortInPlaceRand(t, QuickSort, bigTestSize)
+}
+
+func TestBubbleSortedLarge(t *testing.T) {
+	testSortedCopyRand(t, BubbleSorted, bigTestSize)
 }
 
 func BenchmarkBubbleSortSmall(b *testing.B) {
@@ -95,7 +105,7 @@ func BenchmarkQuickSortLarge(b *testing.B) {
 	}
 }
 
-func testWith[T cmp.Ordered](t *testing.T, f SortInPlace[T], xs []T) {
+func testSortInPlaceWith[T cmp.Ordered](t *testing.T, f SortInPlace[T], xs []T) {
 	n := len(xs)
 	ys := make([]T, n)
 	copy(ys, xs)
@@ -106,8 +116,20 @@ func testWith[T cmp.Ordered](t *testing.T, f SortInPlace[T], xs []T) {
 	}
 }
 
-func testRandInt(t *testing.T, f SortInPlace[int], n int) {
-	testWith(t, f, randomNumbers(n))
+func testSortedCopyWith[T cmp.Ordered](t *testing.T, f SortedCopy[T], xs []T) {
+	ys := f(xs)
+	zs := slices.Sorted(slices.Values(xs))
+	if !slices.Equal(ys, zs) {
+		t.Errorf("sorting %v: expected %v, got %v\n", xs, zs, xs)
+	}
+}
+
+func testSortInPlaceRand(t *testing.T, f SortInPlace[int], n int) {
+	testSortInPlaceWith(t, f, randomNumbers(n))
+}
+
+func testSortedCopyRand(t *testing.T, f SortedCopy[int], n int) {
+	testSortedCopyWith(t, f, randomNumbers(n))
 }
 
 func randomNumbers(n int) []int {
