@@ -1,6 +1,9 @@
 package sorting
 
-import "cmp"
+import (
+	"cmp"
+	"fmt"
+)
 
 func BubbleSort[T cmp.Ordered](xs []T) {
 	n := len(xs)
@@ -211,6 +214,69 @@ func ShellSorted[T cmp.Ordered](xs []T) []T {
 	copy(ys, xs)
 	ShellSort(ys)
 	return ys
+}
+
+type Node[T cmp.Ordered] struct {
+	Value *T
+	Left  *Node[T]
+	Right *Node[T]
+}
+
+func (n *Node[T]) String() string {
+	if n == nil {
+		return "<nil>"
+	}
+	return fmt.Sprintf("[%s %v %s]", n.Left.String(), *n.Value, n.Right.String())
+}
+
+func TreeSort[T cmp.Ordered](xs []T) {
+	n := len(xs)
+	if n <= 1 {
+		return
+	}
+	root := Node[T]{nil, nil, nil}
+	for _, x := range xs {
+		insert(&root, x)
+	}
+	ys := make([]T, 0, n)
+	collectInOrder(&root, &ys)
+	copy(xs, ys)
+}
+
+func insert[T cmp.Ordered](parent *Node[T], x T) {
+	if parent.Value == nil {
+		parent.Value = &x
+		return
+	}
+	node := &Node[T]{&x, nil, nil}
+	if cmp.Less(x, *parent.Value) {
+		if parent.Left == nil {
+			parent.Left = node
+		} else {
+			insert(parent.Left, x)
+		}
+	} else {
+		if parent.Right == nil {
+			parent.Right = node
+		} else {
+			insert(parent.Right, x)
+		}
+	}
+}
+
+func collectInOrder[T cmp.Ordered](node *Node[T], xs *[]T) {
+	if node == nil {
+		return
+	}
+	if node.Left != nil {
+		collectInOrder(node.Left, xs)
+	}
+	if node.Value != nil {
+		*xs = append(*xs, *node.Value)
+	}
+	if node.Right != nil {
+		collectInOrder(node.Right, xs)
+	}
 }
 
 func Swap[T cmp.Ordered](s []T, i, j int) {

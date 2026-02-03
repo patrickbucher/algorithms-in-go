@@ -42,6 +42,11 @@ func TestShellSortSmall(t *testing.T) {
 	testSortInPlaceWith(t, ShellSort, numbers)
 }
 
+func TestTreeSortSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortInPlaceWith(t, TreeSort, numbers)
+}
+
 func TestBubbleSortedSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
 	testSortedCopyWith(t, BubbleSorted, numbers)
@@ -88,12 +93,16 @@ func TestQuickSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, QuickSort, bigTestSize)
 }
 
+func TestMergeSortLarge(t *testing.T) {
+	testSortInPlaceRand(t, MergeSort, bigTestSize)
+}
+
 func TestShellSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, ShellSort, bigTestSize)
 }
 
-func TestMergeSortLarge(t *testing.T) {
-	testSortInPlaceRand(t, MergeSort, bigTestSize)
+func TestTreeSortLarge(t *testing.T) {
+	testSortInPlaceRand(t, TreeSort, bigTestSize)
 }
 
 func TestBubbleSortedLarge(t *testing.T) {
@@ -156,6 +165,12 @@ func BenchmarkShellSortSmall(b *testing.B) {
 	}
 }
 
+func BenchmarkTreeSortSmall(b *testing.B) {
+	for b.Loop() {
+		TreeSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
+	}
+}
+
 func BenchmarkBubbleSortLarge(b *testing.B) {
 	for b.Loop() {
 		BubbleSort(randomNumbers(bigTestSize))
@@ -189,6 +204,12 @@ func BenchmarkMergeSortLarge(b *testing.B) {
 func BenchmarkShellSortLarge(b *testing.B) {
 	for b.Loop() {
 		ShellSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkTreelSortLarge(b *testing.B) {
+	for b.Loop() {
+		TreeSort(randomNumbers(bigTestSize))
 	}
 }
 
