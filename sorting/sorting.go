@@ -193,8 +193,44 @@ func MergeSorted[T cmp.Ordered](xs []T) []T {
 	return vs
 }
 
+func ShellSort[T cmp.Ordered](xs []T) {
+	n := len(xs)
+	fibs := Fibs(n)
+	gaps := make([]int, 0)
+	for i := 0; i < n; i++ {
+		if fibs[i] >= n {
+			break
+		}
+		gaps = append(gaps, fibs[i])
+	}
+	// FIXME: Fibonacci gaps are too big; use Prime Numbers instead
+	for g := len(gaps) - 2; /* skip duplicate 1 */ g >= 0; g-- {
+		d := gaps[g]
+		for i := 0; i+d < n; i++ {
+			if cmp.Less(xs[i+d], xs[i]) {
+				Swap(xs, i, i+d)
+			}
+		}
+	}
+}
+
 func Swap[T cmp.Ordered](s []T, i, j int) {
 	temp := s[i]
 	s[i] = s[j]
 	s[j] = temp
+}
+
+func Fibs(n int) []int {
+	if n <= 0 {
+		return []int{}
+	}
+	a, b := 1, 1
+	fibs := make([]int, n)
+	for i := 0; i < n; i++ {
+		fibs[i] = a
+		c := a + b
+		a = b
+		b = c
+	}
+	return fibs
 }

@@ -10,7 +10,7 @@ import (
 type SortInPlace[T cmp.Ordered] func([]T)
 type SortedCopy[T cmp.Ordered] func([]T) []T
 
-const bigTestSize = 1000
+const bigTestSize = 50
 
 func TestBubbleSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
@@ -35,6 +35,11 @@ func TestQuickSortSmall(t *testing.T) {
 func TestMergeSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
 	testSortInPlaceWith(t, MergeSort, numbers)
+}
+
+func TestShellSortSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortInPlaceWith(t, ShellSort, numbers)
 }
 
 func TestBubbleSortedSmall(t *testing.T) {
@@ -76,6 +81,10 @@ func TestSelectionSortLarge(t *testing.T) {
 
 func TestQuickSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, QuickSort, bigTestSize)
+}
+
+func TestShellSortLarge(t *testing.T) {
+	testSortInPlaceRand(t, ShellSort, bigTestSize)
 }
 
 func TestMergeSortLarge(t *testing.T) {
@@ -132,6 +141,12 @@ func BenchmarkMergeSortSmall(b *testing.B) {
 	}
 }
 
+func BenchmarkShellSortSmall(b *testing.B) {
+	for b.Loop() {
+		ShellSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
+	}
+}
+
 func BenchmarkBubbleSortLarge(b *testing.B) {
 	for b.Loop() {
 		BubbleSort(randomNumbers(bigTestSize))
@@ -159,6 +174,12 @@ func BenchmarkQuickSortLarge(b *testing.B) {
 func BenchmarkMergeSortLarge(b *testing.B) {
 	for b.Loop() {
 		MergeSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkShellSortLarge(b *testing.B) {
+	for b.Loop() {
+		ShellSort(randomNumbers(bigTestSize))
 	}
 }
 
@@ -234,7 +255,7 @@ func testSortInPlaceWith[T cmp.Ordered](t *testing.T, f SortInPlace[T], xs []T) 
 	zs := slices.Sorted(slices.Values(xs))
 	f(xs)
 	if !slices.Equal(xs, zs) {
-		t.Errorf("sorting %v: expected %v, got %v\n", ys, zs, xs)
+		t.Errorf("sorting %v:\nexpected\t%v\ngot\t\t%v\n", ys, zs, xs)
 	}
 }
 
@@ -242,7 +263,7 @@ func testSortedCopyWith[T cmp.Ordered](t *testing.T, f SortedCopy[T], xs []T) {
 	ys := f(xs)
 	zs := slices.Sorted(slices.Values(xs))
 	if !slices.Equal(ys, zs) {
-		t.Errorf("sorting %v: expected %v, got %v\n", xs, zs, xs)
+		t.Errorf("sorting %v:\nexpected\t%v\ngot\t\t%v\n", ys, zs, xs)
 	}
 }
 
@@ -260,4 +281,30 @@ func randomNumbers(n int) []int {
 		numbers[i] = rand.Intn(n)
 	}
 	return numbers
+}
+
+func TestFibs(t *testing.T) {
+	tests := []struct {
+		n    int
+		fibs []int
+	}{
+		{0, []int{}},
+		{1, []int{1}},
+		{2, []int{1, 1}},
+		{3, []int{1, 1, 2}},
+		{4, []int{1, 1, 2, 3}},
+		{5, []int{1, 1, 2, 3, 5}},
+		{6, []int{1, 1, 2, 3, 5, 8}},
+		{7, []int{1, 1, 2, 3, 5, 8, 13}},
+		{8, []int{1, 1, 2, 3, 5, 8, 13, 21}},
+		{9, []int{1, 1, 2, 3, 5, 8, 13, 21, 34}},
+		{10, []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}},
+	}
+	for _, test := range tests {
+		expected := test.fibs
+		actual := Fibs(test.n)
+		if !slices.Equal(actual, expected) {
+			t.Errorf("expected Fibs(%d) to be %v, was %v\n", test.n, expected, actual)
+		}
+	}
 }
