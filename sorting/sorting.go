@@ -125,6 +125,43 @@ func QuickSorted[T cmp.Ordered](xs []T) []T {
 	return ys
 }
 
+func MergeSort[T cmp.Ordered](xs []T) {
+	n := len(xs)
+	if n <= 1 {
+		return
+	}
+	p := n / 2
+	q := n - p
+	ys, zs := make([]T, p), make([]T, q)
+	for i := 0; i < p; i++ {
+		ys[i] = xs[i]
+	}
+	for i := p; i < n; i++ {
+		zs[i-p] = xs[i]
+	}
+	MergeSort(ys)
+	MergeSort(zs)
+	var v T
+	l := 0
+	r := 0
+	for i := 0; i < n; i++ {
+		if l >= p {
+			v = zs[r]
+			r++
+		} else if r >= q {
+			v = ys[l]
+			l++
+		} else if cmp.Less(ys[l], zs[r]) {
+			v = ys[l]
+			l++
+		} else {
+			v = zs[r]
+			r++
+		}
+		xs[i] = v
+	}
+}
+
 func Swap[T cmp.Ordered](s []T, i, j int) {
 	temp := s[i]
 	s[i] = s[j]

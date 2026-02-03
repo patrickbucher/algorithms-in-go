@@ -32,6 +32,11 @@ func TestQuickSortSmall(t *testing.T) {
 	testSortInPlaceWith(t, QuickSort, numbers)
 }
 
+func TestMergeSortSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortInPlaceWith(t, MergeSort, numbers)
+}
+
 func TestBubbleSortedSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
 	testSortedCopyWith(t, BubbleSorted, numbers)
