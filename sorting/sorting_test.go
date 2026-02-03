@@ -10,7 +10,7 @@ import (
 type SortInPlace[T cmp.Ordered] func([]T)
 type SortedCopy[T cmp.Ordered] func([]T) []T
 
-const bigTestSize = 50
+const bigTestSize = 1000
 
 func TestBubbleSortSmall(t *testing.T) {
 	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
@@ -67,6 +67,11 @@ func TestMergeSortedSmall(t *testing.T) {
 	testSortedCopyWith(t, MergeSorted, numbers)
 }
 
+func TestShellSortedSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortedCopyWith(t, ShellSorted, numbers)
+}
+
 func TestBubbleSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, BubbleSort, bigTestSize)
 }
@@ -109,6 +114,10 @@ func TestQuickSortedLarge(t *testing.T) {
 
 func TestMergeSortedLarge(t *testing.T) {
 	testSortedCopyRand(t, MergeSorted, bigTestSize)
+}
+
+func TestShellSortedLarge(t *testing.T) {
+	testSortedCopyRand(t, ShellSorted, bigTestSize)
 }
 
 func BenchmarkBubbleSortSmall(b *testing.B) {
@@ -218,6 +227,13 @@ func BenchmarkMergeSortedSmall(b *testing.B) {
 	}
 }
 
+func BenchmarkShellSortedSmall(b *testing.B) {
+	numbers := []int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	for b.Loop() {
+		ShellSorted(numbers)
+	}
+}
+
 func BenchmarkBubbleSortedLarge(b *testing.B) {
 	for b.Loop() {
 		BubbleSorted(randomNumbers(bigTestSize))
@@ -245,6 +261,12 @@ func BenchmarkQuickSortedLarge(b *testing.B) {
 func BenchmarkMergeSortedLarge(b *testing.B) {
 	for b.Loop() {
 		MergeSorted(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkShellSortedLarge(b *testing.B) {
+	for b.Loop() {
+		ShellSorted(randomNumbers(bigTestSize))
 	}
 }
 
@@ -281,30 +303,4 @@ func randomNumbers(n int) []int {
 		numbers[i] = rand.Intn(n)
 	}
 	return numbers
-}
-
-func TestFibs(t *testing.T) {
-	tests := []struct {
-		n    int
-		fibs []int
-	}{
-		{0, []int{}},
-		{1, []int{1}},
-		{2, []int{1, 1}},
-		{3, []int{1, 1, 2}},
-		{4, []int{1, 1, 2, 3}},
-		{5, []int{1, 1, 2, 3, 5}},
-		{6, []int{1, 1, 2, 3, 5, 8}},
-		{7, []int{1, 1, 2, 3, 5, 8, 13}},
-		{8, []int{1, 1, 2, 3, 5, 8, 13, 21}},
-		{9, []int{1, 1, 2, 3, 5, 8, 13, 21, 34}},
-		{10, []int{1, 1, 2, 3, 5, 8, 13, 21, 34, 55}},
-	}
-	for _, test := range tests {
-		expected := test.fibs
-		actual := Fibs(test.n)
-		if !slices.Equal(actual, expected) {
-			t.Errorf("expected Fibs(%d) to be %v, was %v\n", test.n, expected, actual)
-		}
-	}
 }
