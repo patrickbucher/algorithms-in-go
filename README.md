@@ -7,7 +7,7 @@ Practicing Go (including Testing and Benchmarking) using Algorithms
     - [x] Insertion Sort
     - [x] Selection Sort
     - [x] Quick Sort
-    - [ ] Merge Sort
+    - [x] Merge Sort
 - Searching
     - [ ] Binary Search
     - [ ] Breadt-First Search
