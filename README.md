@@ -9,6 +9,10 @@ Practicing Go (including Testing and Benchmarking) using Algorithms
     - [x] Quick Sort
     - [x] Merge Sort
     - [x] Shell Sort
+- Sequences
+    - [x] Fibonacci
+    - [x] Prime Numbers
+    - [x] Prime Sieve
 - Searching
     - [ ] Binary Search
     - [ ] Breadt-First Search
