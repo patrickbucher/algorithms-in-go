@@ -5,6 +5,9 @@ import (
 	"testing"
 )
 
+const primesSmallTestSize = 100
+const primesLargeTestSize = 100_000
+
 func TestFibs(t *testing.T) {
 	tests := []struct {
 		n    int
@@ -31,20 +34,55 @@ func TestFibs(t *testing.T) {
 	}
 }
 
+var primeTests = []struct {
+	l      int
+	primes []int
+}{
+	{10, []int{2, 3, 5, 7}},
+	{20, []int{2, 3, 5, 7, 11, 13, 17, 19}},
+	{30, []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}},
+}
+
 func TestPrimes(t *testing.T) {
-	tests := []struct {
-		l      int
-		primes []int
-	}{
-		{10, []int{2, 3, 5, 7}},
-		{20, []int{2, 3, 5, 7, 11, 13, 17, 19}},
-		{30, []int{2, 3, 5, 7, 11, 13, 17, 19, 23, 29}},
-	}
-	for _, test := range tests {
+	for _, test := range primeTests {
 		expected := test.primes
 		actual := Primes(test.l)
 		if !slices.Equal(actual, expected) {
 			t.Errorf("expected Primes(%d) to be %v, was %v\n", test.l, expected, actual)
 		}
+	}
+}
+
+func TestPrimeSieve(t *testing.T) {
+	for _, test := range primeTests {
+		expected := test.primes
+		actual := PrimeSieve(test.l)
+		if !slices.Equal(actual, expected) {
+			t.Errorf("expected PrimeSieve(%d) to be %v, was %v\n", test.l, expected, actual)
+		}
+	}
+}
+
+func BenchmarkPrimesSmall(b *testing.B) {
+	for b.Loop() {
+		Primes(primesSmallTestSize)
+	}
+}
+
+func BenchmarkPrimesLarge(b *testing.B) {
+	for b.Loop() {
+		Primes(primesLargeTestSize)
+	}
+}
+
+func BenchmarkPrimeSieveSmall(b *testing.B) {
+	for b.Loop() {
+		PrimeSieve(primesSmallTestSize)
+	}
+}
+
+func BenchmarkPrimeSieveLarge(b *testing.B) {
+	for b.Loop() {
+		PrimeSieve(primesLargeTestSize)
 	}
 }

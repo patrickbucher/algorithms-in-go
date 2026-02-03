@@ -31,3 +31,20 @@ func Primes(l int) []int {
 	}
 	return primes
 }
+
+func PrimeSieve(l int) []int {
+	primes := make([]int, 0)
+	for i := 2; i <= l; i++ {
+		prime := true
+		for _, p := range primes {
+			if i%p == 0 {
+				prime = false
+				break
+			}
+		}
+		if prime {
+			primes = append(primes, i)
+		}
+	}
+	return primes
+}
