@@ -41,6 +41,13 @@ func InsertionSort[T cmp.Ordered](xs []T) {
 	}
 }
 
+func InsertionSorted[T cmp.Ordered](xs []T) []T {
+	ys := make([]T, len(xs))
+	copy(ys, xs)
+	InsertionSort(ys)
+	return ys
+}
+
 func SelectionSort[T cmp.Ordered](xs []T) {
 	n := len(xs)
 	for i := 0; i < n; i++ {
@@ -53,6 +60,14 @@ func SelectionSort[T cmp.Ordered](xs []T) {
 		}
 		Swap(xs, i, m)
 	}
+}
+
+func SelectionSorted[T cmp.Ordered](xs []T) []T {
+	// TODO: with a copy, there's a simpler implementation possible
+	ys := make([]T, len(xs))
+	copy(ys, xs)
+	SelectionSort(ys)
+	return ys
 }
 
 func QuickSort[T cmp.Ordered](xs []T) {
@@ -85,6 +100,14 @@ func quickSort[T cmp.Ordered](xs []T, lower, upper int) {
 	Swap(xs, lower, p)
 	quickSort(xs, lower, p-1)
 	quickSort(xs, p+1, upper)
+}
+
+func QuickSorted[T cmp.Ordered](xs []T) []T {
+	// TODO: with a copy, there's a simpler implementation possible
+	ys := make([]T, len(xs))
+	copy(ys, xs)
+	QuickSort(ys)
+	return ys
 }
 
 func Swap[T cmp.Ordered](s []T, i, j int) {

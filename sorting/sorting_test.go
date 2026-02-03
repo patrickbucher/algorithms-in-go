@@ -37,6 +37,21 @@ func TestBubbleSortedSmall(t *testing.T) {
 	testSortedCopyWith(t, BubbleSorted, numbers)
 }
 
+func TestInsertionSortedSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortedCopyWith(t, InsertionSorted, numbers)
+}
+
+func TestSelectionSortedSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortedCopyWith(t, SelectionSorted, numbers)
+}
+
+func TestQuickSortedSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortedCopyWith(t, QuickSorted, numbers)
+}
+
 func TestBubbleSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, BubbleSort, bigTestSize)
 }
@@ -55,6 +70,18 @@ func TestQuickSortLarge(t *testing.T) {
 
 func TestBubbleSortedLarge(t *testing.T) {
 	testSortedCopyRand(t, BubbleSorted, bigTestSize)
+}
+
+func TestInsertionSortedLarge(t *testing.T) {
+	testSortedCopyRand(t, InsertionSorted, bigTestSize)
+}
+
+func TestSelectionSortedLarge(t *testing.T) {
+	testSortedCopyRand(t, SelectionSorted, bigTestSize)
+}
+
+func TestQuickSortedLarge(t *testing.T) {
+	testSortedCopyRand(t, QuickSorted, bigTestSize)
 }
 
 func BenchmarkBubbleSortSmall(b *testing.B) {
@@ -102,6 +129,58 @@ func BenchmarkSelectionSortLarge(b *testing.B) {
 func BenchmarkQuickSortLarge(b *testing.B) {
 	for b.Loop() {
 		QuickSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkBubbleSortedSmall(b *testing.B) {
+	numbers := []int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	for b.Loop() {
+		BubbleSorted(numbers)
+	}
+}
+
+func BenchmarkInsertionSortedSmall(b *testing.B) {
+	numbers := []int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	for b.Loop() {
+		InsertionSorted(numbers)
+	}
+}
+
+func BenchmarkSelectionSortedSmall(b *testing.B) {
+	numbers := []int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	for b.Loop() {
+		SelectionSorted(numbers)
+	}
+}
+
+func BenchmarkQuickSortedSmall(b *testing.B) {
+	numbers := []int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	for b.Loop() {
+		QuickSorted(numbers)
+	}
+}
+
+func BenchmarkBubbleSortedLarge(b *testing.B) {
+	for b.Loop() {
+		BubbleSorted(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkSelectionSortedLarge(b *testing.B) {
+	for b.Loop() {
+		SelectionSorted(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkInsertionSortedLarge(b *testing.B) {
+	for b.Loop() {
+		InsertionSorted(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkQuickSortedLarge(b *testing.B) {
+	for b.Loop() {
+		QuickSorted(randomNumbers(bigTestSize))
 	}
 }
 
