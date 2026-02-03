@@ -63,7 +63,6 @@ func SelectionSort[T cmp.Ordered](xs []T) {
 }
 
 func SelectionSorted[T cmp.Ordered](xs []T) []T {
-	// TODO: with a copy, there's a simpler implementation possible
 	ys := make([]T, len(xs))
 	copy(ys, xs)
 	SelectionSort(ys)
@@ -103,10 +102,26 @@ func quickSort[T cmp.Ordered](xs []T, lower, upper int) {
 }
 
 func QuickSorted[T cmp.Ordered](xs []T) []T {
-	// TODO: with a copy, there's a simpler implementation possible
-	ys := make([]T, len(xs))
-	copy(ys, xs)
-	QuickSort(ys)
+	n := len(xs)
+	if n == 0 {
+		return []T{}
+	}
+	if n == 1 {
+		return []T{xs[0]}
+	}
+	pivot := xs[0]
+	smaller, larger := make([]T, 0), make([]T, 0)
+	for i := 1; i < n; i++ {
+		if cmp.Less(xs[i], pivot) {
+			smaller = append(smaller, xs[i])
+		} else {
+			larger = append(larger, xs[i])
+		}
+	}
+	ys := make([]T, 0, n)
+	ys = append(ys, QuickSorted(smaller)...)
+	ys = append(ys, pivot)
+	ys = append(ys, QuickSorted(larger)...)
 	return ys
 }
 
