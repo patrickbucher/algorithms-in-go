@@ -57,6 +57,11 @@ func TestQuickSortedSmall(t *testing.T) {
 	testSortedCopyWith(t, QuickSorted, numbers)
 }
 
+func TestMergeSortedSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortedCopyWith(t, MergeSorted, numbers)
+}
+
 func TestBubbleSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, BubbleSort, bigTestSize)
 }
@@ -73,6 +78,10 @@ func TestQuickSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, QuickSort, bigTestSize)
 }
 
+func TestMergeSortLarge(t *testing.T) {
+	testSortInPlaceRand(t, MergeSort, bigTestSize)
+}
+
 func TestBubbleSortedLarge(t *testing.T) {
 	testSortedCopyRand(t, BubbleSorted, bigTestSize)
 }
@@ -87,6 +96,10 @@ func TestSelectionSortedLarge(t *testing.T) {
 
 func TestQuickSortedLarge(t *testing.T) {
 	testSortedCopyRand(t, QuickSorted, bigTestSize)
+}
+
+func TestMergeSortedLarge(t *testing.T) {
+	testSortedCopyRand(t, MergeSorted, bigTestSize)
 }
 
 func BenchmarkBubbleSortSmall(b *testing.B) {
@@ -113,6 +126,12 @@ func BenchmarkQuickSortSmall(b *testing.B) {
 	}
 }
 
+func BenchmarkMergeSortSmall(b *testing.B) {
+	for b.Loop() {
+		MergeSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
+	}
+}
+
 func BenchmarkBubbleSortLarge(b *testing.B) {
 	for b.Loop() {
 		BubbleSort(randomNumbers(bigTestSize))
@@ -134,6 +153,12 @@ func BenchmarkSelectionSortLarge(b *testing.B) {
 func BenchmarkQuickSortLarge(b *testing.B) {
 	for b.Loop() {
 		QuickSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkMergeSortLarge(b *testing.B) {
+	for b.Loop() {
+		MergeSort(randomNumbers(bigTestSize))
 	}
 }
 
@@ -165,6 +190,13 @@ func BenchmarkQuickSortedSmall(b *testing.B) {
 	}
 }
 
+func BenchmarkMergeSortedSmall(b *testing.B) {
+	numbers := []int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	for b.Loop() {
+		MergeSorted(numbers)
+	}
+}
+
 func BenchmarkBubbleSortedLarge(b *testing.B) {
 	for b.Loop() {
 		BubbleSorted(randomNumbers(bigTestSize))
@@ -186,6 +218,12 @@ func BenchmarkInsertionSortedLarge(b *testing.B) {
 func BenchmarkQuickSortedLarge(b *testing.B) {
 	for b.Loop() {
 		QuickSorted(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkMergeSortedLarge(b *testing.B) {
+	for b.Loop() {
+		MergeSorted(randomNumbers(bigTestSize))
 	}
 }
 
