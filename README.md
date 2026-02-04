@@ -9,17 +9,14 @@ Practicing Go (including Testing and Benchmarking) using Algorithms
     - [x] Quick Sort
     - [x] Merge Sort
     - [x] Shell Sort
-    - [ ] Tree Sort (WIP)
-        - non-destructive implementation
-            - missing tests and benchmarks
-        - increase test coverage
+    - [x] Tree Sort
 - Sequences
     - [x] Fibonacci
     - [x] Prime Numbers
     - [x] Prime Sieve
 - Searching
     - [ ] Binary Search
-    - [ ] Breadt-First Search
+    - [ ] Breadth-First Search
     - [ ] Depth-First Search
     - [ ] Shortest Path (Dijkstra)
     - [ ] Quickselect

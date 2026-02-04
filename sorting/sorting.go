@@ -220,6 +220,11 @@ type Node[T cmp.Ordered] struct {
 }
 
 func TreeSort[T cmp.Ordered](xs []T) {
+	ys := TreeSorted(xs)
+	copy(xs, ys)
+}
+
+func TreeSorted[T cmp.Ordered](xs []T) []T {
 	n := len(xs)
 	root := Node[T]{nil, nil, nil}
 	for _, x := range xs {
@@ -227,7 +232,7 @@ func TreeSort[T cmp.Ordered](xs []T) {
 	}
 	ys := make([]T, 0, n)
 	collectInOrder(&root, &ys)
-	copy(xs, ys)
+	return ys
 }
 
 func insert[T cmp.Ordered](parent *Node[T], x T) {

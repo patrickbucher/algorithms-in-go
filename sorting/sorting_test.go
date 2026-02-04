@@ -77,6 +77,11 @@ func TestShellSortedSmall(t *testing.T) {
 	testSortedCopyWith(t, ShellSorted, numbers)
 }
 
+func TestTreeSortedSmall(t *testing.T) {
+	numbers := []uint8{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	testSortedCopyWith(t, TreeSorted, numbers)
+}
+
 func TestBubbleSortLarge(t *testing.T) {
 	testSortInPlaceRand(t, BubbleSort, bigTestSize)
 }
@@ -129,6 +134,10 @@ func TestShellSortedLarge(t *testing.T) {
 	testSortedCopyRand(t, ShellSorted, bigTestSize)
 }
 
+func TestTreeSortedLarge(t *testing.T) {
+	testSortedCopyRand(t, TreeSorted, bigTestSize)
+}
+
 func BenchmarkBubbleSortSmall(b *testing.B) {
 	for b.Loop() {
 		BubbleSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
@@ -168,48 +177,6 @@ func BenchmarkShellSortSmall(b *testing.B) {
 func BenchmarkTreeSortSmall(b *testing.B) {
 	for b.Loop() {
 		TreeSort([]int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0})
-	}
-}
-
-func BenchmarkBubbleSortLarge(b *testing.B) {
-	for b.Loop() {
-		BubbleSort(randomNumbers(bigTestSize))
-	}
-}
-
-func BenchmarkInsertionSortLarge(b *testing.B) {
-	for b.Loop() {
-		InsertionSort(randomNumbers(bigTestSize))
-	}
-}
-
-func BenchmarkSelectionSortLarge(b *testing.B) {
-	for b.Loop() {
-		SelectionSort(randomNumbers(bigTestSize))
-	}
-}
-
-func BenchmarkQuickSortLarge(b *testing.B) {
-	for b.Loop() {
-		QuickSort(randomNumbers(bigTestSize))
-	}
-}
-
-func BenchmarkMergeSortLarge(b *testing.B) {
-	for b.Loop() {
-		MergeSort(randomNumbers(bigTestSize))
-	}
-}
-
-func BenchmarkShellSortLarge(b *testing.B) {
-	for b.Loop() {
-		ShellSort(randomNumbers(bigTestSize))
-	}
-}
-
-func BenchmarkTreelSortLarge(b *testing.B) {
-	for b.Loop() {
-		TreeSort(randomNumbers(bigTestSize))
 	}
 }
 
@@ -255,6 +222,55 @@ func BenchmarkShellSortedSmall(b *testing.B) {
 	}
 }
 
+func BenchmarkTreeSortedSmall(b *testing.B) {
+	numbers := []int{5, 6, 4, 7, 3, 8, 2, 9, 1, 0}
+	for b.Loop() {
+		TreeSorted(numbers)
+	}
+}
+
+func BenchmarkBubbleSortLarge(b *testing.B) {
+	for b.Loop() {
+		BubbleSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkInsertionSortLarge(b *testing.B) {
+	for b.Loop() {
+		InsertionSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkSelectionSortLarge(b *testing.B) {
+	for b.Loop() {
+		SelectionSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkQuickSortLarge(b *testing.B) {
+	for b.Loop() {
+		QuickSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkMergeSortLarge(b *testing.B) {
+	for b.Loop() {
+		MergeSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkShellSortLarge(b *testing.B) {
+	for b.Loop() {
+		ShellSort(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkTreeSortLarge(b *testing.B) {
+	for b.Loop() {
+		TreeSort(randomNumbers(bigTestSize))
+	}
+}
+
 func BenchmarkBubbleSortedLarge(b *testing.B) {
 	for b.Loop() {
 		BubbleSorted(randomNumbers(bigTestSize))
@@ -288,6 +304,12 @@ func BenchmarkMergeSortedLarge(b *testing.B) {
 func BenchmarkShellSortedLarge(b *testing.B) {
 	for b.Loop() {
 		ShellSorted(randomNumbers(bigTestSize))
+	}
+}
+
+func BenchmarkTreeSortedLarge(b *testing.B) {
+	for b.Loop() {
+		TreeSorted(randomNumbers(bigTestSize))
 	}
 }
 
