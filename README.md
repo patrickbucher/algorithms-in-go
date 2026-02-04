@@ -10,14 +10,16 @@ Practicing Go (including Testing and Benchmarking) using Algorithms
     - [x] Merge Sort
     - [x] Shell Sort
     - [x] Tree Sort
+- Concurrent Sorting
+    - [ ] Parallel Quick Sort
+    - [ ] Parallel Merge Sort
 - Sequences
     - [x] Fibonacci
     - [x] Prime Numbers
     - [x] Prime Sieve
 - Searching
+    - [ ] Linear Search
     - [ ] Binary Search
-    - [ ] Breadth-First Search
-    - [ ] Depth-First Search
     - [ ] Shortest Path (Dijkstra)
     - [ ] Quickselect
 - Greedy/Dynamic
