@@ -1,9 +1,6 @@
 package sorting
 
-import (
-	"cmp"
-	"fmt"
-)
+import "cmp"
 
 func BubbleSort[T cmp.Ordered](xs []T) {
 	n := len(xs)
@@ -222,18 +219,8 @@ type Node[T cmp.Ordered] struct {
 	Right *Node[T]
 }
 
-func (n *Node[T]) String() string {
-	if n == nil {
-		return "<nil>"
-	}
-	return fmt.Sprintf("[%s %v %s]", n.Left.String(), *n.Value, n.Right.String())
-}
-
 func TreeSort[T cmp.Ordered](xs []T) {
 	n := len(xs)
-	if n <= 1 {
-		return
-	}
 	root := Node[T]{nil, nil, nil}
 	for _, x := range xs {
 		insert(&root, x)
@@ -265,9 +252,6 @@ func insert[T cmp.Ordered](parent *Node[T], x T) {
 }
 
 func collectInOrder[T cmp.Ordered](node *Node[T], xs *[]T) {
-	if node == nil {
-		return
-	}
 	if node.Left != nil {
 		collectInOrder(node.Left, xs)
 	}
