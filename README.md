@@ -18,8 +18,9 @@ Practicing Go (including Testing and Benchmarking) using Algorithms
     - [x] Prime Numbers
     - [x] Prime Sieve
 - Searching
-    - [ ] Linear Search
-    - [ ] Binary Search
+    - [x] Linear Search
+    - [x] Binary Search
+    - [ ] Binary Tree Search
     - [ ] Shortest Path (Dijkstra)
     - [ ] Quickselect
 - Greedy/Dynamic
